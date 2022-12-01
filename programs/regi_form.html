@@ -1,0 +1,31 @@
+<html>
+    <head>
+        <title>登録画面</title>
+        <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
+        <link rel="stylesheet" href="login.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <header class="header">
+            <h1 class="header_h1">新規登録</h1>
+        </header>
+        
+        <form action="" method="post">
+            <table>
+                <tr>
+                    <td class="label" width =40%>ユーザーネーム：</td><td><input type="text" name ="username" class="text" required></td>
+                </tr>
+                <tr>
+                    <td class="label">パスワード：</td><td><input type="password" name ="password1" class="text" required></td>
+                </tr>
+                <tr>
+                    <td class="label">パスワード（２回目）：</td><td><input type="password" name ="password2" class="text" required></td>
+                </tr>
+                <tr><td colspan="2"><input type="submit" value="登録" class="button"></td></tr>
+
+            </table>
+        </form>
+    </body>
+</html>
