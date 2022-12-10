@@ -3,5 +3,5 @@ docs の中に設計書などを入れる
 programsの中にhtml, phpなどを入れる
 
 
-programs/view(htmlが記述されるファイル)/各cssディレクトリ
+programs/view(htmlが記述されるファイル)/各cssディレクトリ\n
         /methods(各関数などが記述されたファイルはここへ)
