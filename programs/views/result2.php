@@ -4,28 +4,9 @@
 <?php
 
 require '../vendor/autoload.php';
+require '../methods/api_request.php';
 
-$session = new SpotifyWebAPI\Session(
-    'e3b54d636bfc4563847d04e832bf8f3d',
-    '312b2e31c1b94754b86c6d686e14f991'
-);
-
-$api = new SpotifyWebAPI\SpotifyWebAPI();
-
-$session->requestCredentialsToken();
-$accessToken = $session->getAccessToken();
-$api->setAccessToken($accessToken);
-
-$name = $_POST["search"];
-
-$query = $name;
-$type = array('track','artist');
-$options = array();
-
-$options += array('market'=>'JP');
-
-$result = $api->search($query, $type, $options);
-
+$result = search_track($_POST["search"]);
 ?>
 </head>
 
