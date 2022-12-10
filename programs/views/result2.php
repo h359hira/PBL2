@@ -3,7 +3,7 @@
 <head>
 <?php
 
-require 'vendor/autoload.php';
+require '../vendor/autoload.php';
 
 $session = new SpotifyWebAPI\Session(
     'e3b54d636bfc4563847d04e832bf8f3d',

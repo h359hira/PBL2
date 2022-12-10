@@ -44,9 +44,9 @@ class GetReview{
 }
 
 //この下の処理を他画面で呼び出す。
-$db_review = new GetReview();
+/*$db_review = new GetReview();
 $res1 = $db_review->get_all_track_review($spotify_id);
 $res2 = $db_review->get_all_user_review($subject_user_id);
 var_dump($res1);
-var_dump($res2);
+var_dump($res2);*/
 ?>
