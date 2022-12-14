@@ -3,27 +3,22 @@
     <head>
         <meta charset="utf-8">
         <title>ログイン画面</title>
-        <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
-        <link rel="stylesheet" href="login.css">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap" rel="stylesheet">
     </head>
     <body>
-        <header class="header">
-            <h1 class="header_h1">ログイン</h1>
+        <header>
+            <h1>ログイン</h1>
         </header>
-        <form action="login.php" method="post" class ="form_content">
+        <form action="login.php" method="POST">
             <table>
                 <tr>
-                    <td class="label" width =40%>ユーザーネーム：</td><td><input type="text" name ="username" class="text" required></td>
+                    <td>ユーザーID：</td><td><input type="text" name ="user_id" required></td>
                 </tr>
                 <tr>
-                    <td class="label">パスワード：</td><td><input type="password" name ="password" class="text" required></td>
+                    <td class="label">パスワード：</td><td><input type="password" name ="password" required></td>
                 </tr>
-                <tr><td colspan="2"><input type="submit" value="ログイン" class="button"></td></tr>
+                <tr><td colspan="2"><input type="submit" value="ログイン"></td></tr>
             </table>
-            <p class="regi_guide">まだ登録していない方は</p>
+            <p>まだ登録していない方は</p>
         </form>
         <a href ="regi_form.html"><button class = "regi_page_button">新規登録</button></a>
     </body>

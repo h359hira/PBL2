@@ -3,30 +3,36 @@
     <head>
         <meta charset="utf-8">
         <title>登録画面</title>
-        <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
-        <link rel="stylesheet" href="login.css">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Kosugi+Maru&display=swap" rel="stylesheet">
     </head>
     <body>
-        <header class="header">
-            <h1 class="header_h1">新規登録</h1>
+        <header>
+            <h1>新規登録</h1>
         </header>
         
-        <form action="regi.php" method="post">
+        <form action="regi.php" method="POST">
             <table>
                 <tr>
-                    <td class="label" width =40%>ユーザーネーム：</td><td><input type="text" name ="username" class="text" required></td>
+                    <td>ユーザーID：</td><td><input type="text" name ="user_id" required></td>
                 </tr>
                 <tr>
-                    <td class="label">パスワード：</td><td><input type="password" name ="password1" class="text" required></td>
+                    <td>ユーザーネーム：</td><td><input type="text" name ="user_name" required></td>
                 </tr>
                 <tr>
-                    <td class="label">パスワード（２回目）：</td><td><input type="password" name ="password2" class="text" required></td>
+                    <td>パスワード：</td><td><input type="text" name ="password1" required></td>
                 </tr>
-                <tr><td colspan="2"><input type="submit" value="登録" class="button"></td></tr>
-
+                <tr>
+                    <td>パスワード（２回目）：</td><td><input type="text" name ="password2" required></td>
+                </tr>
+                <tr>
+                    <td>性別：</td><td><input type="radio" name ="sex" value = "man" required>男<input type="radio" name="sex" value="woman">女</td>
+                </tr>
+                <tr>
+                    <td>年齢：</td><td><input type="text" name ="age" required></td>
+                </tr>
+                <tr>
+                    <td>お気に入りのジャンル：</td><td><input type="text" name ="favorite" required></td>
+                </tr>
+                <tr><td colspan="2"><input type="submit" value="登録"></td></tr>
             </table>
         </form>
     </body>
