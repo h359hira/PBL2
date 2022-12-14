@@ -8,10 +8,12 @@
 <link rel="stylesheet" href="./detail_css/border.css">
 <link rel="stylesheet" href="./detail_css/tab.css">
 
-<style>
+<?php
+ require '../methods/db_m.php';
+ require '../methods/sortByKey.php';
+?>
 
-</style>
-
+<style></style>
 
 
 </head>
@@ -20,9 +22,9 @@
 
   <nav>
     <ul>
-      <li><a class=”current” href=”#”> Home </a></li>
-      <li><a href=”#”> Search </a></li>
-      <li><a href=”#”> Community </a></li>
+      <li><a class=”current” href=home.php> Home </a></li>
+      <li><a href=search.html> Search </a></li>
+      <li><a href=communitie.php> Community </a></li>
       <li><a href=”#”> Profile </a></li>
     </ul>
   </nav>
@@ -32,6 +34,7 @@
   -->
   <?php
     // 指定したキーに対応する値を基準に、配列をソートする
+    /*
     function sortByKey($key_name, $sort_order, $array) {
       foreach ($array as $key => $value) {
           $standard_key_array[$key] = $value[$key_name];
@@ -39,7 +42,9 @@
       array_multisort($standard_key_array, $sort_order, $array);
       return $array;
     }
+    */
 
+    //テキストファイルテストコード
     $filename = './track_point.txt';
 
     $file = file($filename);//1行ずつ配列として格納
@@ -64,6 +69,14 @@
     //print_r($sorted_array);
     var_dump($sorted_array);
 
+    //曲の平均点ランキング取得
+    //$track_ave = ;
+    //$track_rank = sortByKey('AVE(score)', SORT_DESC, $track_ave);
+
+    //ユーザーの平均点ランキング取得
+    //$user_ave = ;
+    //$user_rank = sortByKey('AVE(score)', SORT_DESC, $user_ave);
+
   ?>
 
     <h1>ランキング</h1>
@@ -71,9 +84,17 @@
     <h3>楽曲ランキング</h3>
       <div id="track_ranking">
         <?php
+          //ソート結果を順番に表示するコード
           foreach( $sorted_array as $key => $value ){
             echo $key+1 . '. ' . $value['title'].'<br>';
           }
+          /*
+          //ソート結果を順番に表示するコード
+          foreach( $track_rank as $key => $value ){
+           if( $key >= 3 ) break; //3個目まで表示して終了
+           echo $key+1 . '. ' . $value['spotify_id']. ', '. $value['AVE(score)'] . '<br>';
+          }
+          */
         ?>
       </div>
 
@@ -82,6 +103,15 @@
         1.<br>
         2.<br>
         3.<br>
+        <?php
+        /*
+        //ソート結果を順番に表示するコード
+        foreach( $user_rank as $key => $value ){
+         if( $key >= 3 ) break; //3個目まで表示して終了
+         echo $key+1 . '. ' . $value['subject_user_id']. ', '. $value['AVE(score)'] . '<br>';
+        }
+        */
+        ?>
       </div>
 </body>
 </html>
