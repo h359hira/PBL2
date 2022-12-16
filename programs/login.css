@@ -64,7 +64,7 @@ input.text{
     background-color: white;
     color: black;
     padding: 10px;
-    width:450px
+    width:450px;
 }
 
 .button{
@@ -99,7 +99,7 @@ table{
 }
 
 p.regi_guide{
-    font-size: 20px;
+    font-size: 30px;
     margin-top: 20px;
     color: red;
 }
@@ -120,4 +120,9 @@ p.regi_guide{
     transform: scale(1.1);
     transition-duration: 0.5s;
     opacity: 0.6;
+}
+
+p.regi_succes{
+    margin:40px;
+    font-size: 30px;
 }
