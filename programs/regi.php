@@ -10,9 +10,9 @@
         </header>
 
         <?php
-        $user_id = $_POST["user_id"];
+        $user_id = $_POST["user_id"]; 
         $password = $_POST["password1"];
-        $password1 = $_POST["password2"];
+        $password1 = $_POST["password2"];   //２回目のパスワード
         $user_name = $_POST["user_name"];
         $age = $_POST["age"];
         $sex = $_POST["sex"];
@@ -28,12 +28,12 @@
                     exit;
                 }
             }
-            $sql=$db->prepare(("INSERT INTO user_table VALUE (:user_id, :user_name, :password, :sex, :age, :favorite)"));
+            $sql=$db->prepare(("INSERT INTO user_table VALUE (:user_id, :user_name, :password, :age, :sex, :favorite)"));
             $sql->bindParam( ':user_id', $user_id, PDO::PARAM_STR);
             $sql->bindParam( ':user_name', $user_name, PDO::PARAM_STR);
             $sql->bindParam( ':password', $password, PDO::PARAM_STR);
-            $sql->bindParam( ':sex', $sex, PDO::PARAM_STR);
             $sql->bindParam( ':age', $age, PDO::PARAM_STR);
+            $sql->bindParam( ':sex', $sex, PDO::PARAM_STR);
             $sql->bindParam( ':favorite', $favorite, PDO::PARAM_STR);
             $sql->execute();
             echo "<p>登録成功しました。</p>";

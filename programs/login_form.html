@@ -11,10 +11,10 @@
         <form action="login.php" method="POST">
             <table>
                 <tr>
-                    <td>ユーザーID：</td><td><input type="text" name ="user_id" required></td>
+                    <td>ユーザーID：</td><td><input type="text" name ="user_id" maxlength = 25 pattern="^[a-zA-Z0-9]+$" required></td>
                 </tr>
                 <tr>
-                    <td class="label">パスワード：</td><td><input type="password" name ="password" required></td>
+                    <td class="label">パスワード：</td><td><input type="password" name ="password" maxlength = 20 required></td>
                 </tr>
                 <tr><td colspan="2"><input type="submit" value="ログイン"></td></tr>
             </table>
