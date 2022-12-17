@@ -20,8 +20,10 @@ $result = search_track($_POST["search"]);
     echo '<br>';
     echo '<br>';
     foreach ($result->tracks->items as $track) {
-        print '<a href="http://google.co.jp">'.$track->name.'<br>';
-        echo '<br>';
+        $url = "detail_song.php?spotify_id=".$track->id;
+        echo "<a href=\"$url\">"; 
+        echo $track->name."</a>";
+        echo '<br><br>';
     }
     ?>
 </body>
