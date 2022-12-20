@@ -16,7 +16,7 @@
   //$res1 = $db->get_all_user_review('john1234');
   //$res2 = $db->get_all_track_review('7iN1s7xHE4ifF5povM6A48');
   
-  //detail
+  //detail_song
   require '../vendor/autoload.php';
   require '../methods/api_request.php';
 
@@ -30,7 +30,7 @@
   <nav>
     <ul>
       <li><a class=”current” href=”#”>Home</a></li>
-      <li><a href=”http://localhost/pbl2_git/pbl2/search.html”>Search</a></li>
+      <li><a href=”http://localhost/pbl2_work/programs/views/search.html”>Search</a></li>
       <li><a href=”#”>Community</a></li>
       <li><a href=”#”>Profile</a></li>
     </ul>
@@ -42,7 +42,7 @@
 
     <div class="area">
       <input type="radio" name="tab_name" id="tab1" checked>
-      <label class="tab_class" for="tab1">タブ1</label>
+      <label class="tab_class" for="tab1">曲情報</label>
       <div class="content_class">
         <p>
           <?php
@@ -50,6 +50,7 @@
           echo "収録アルバム名：" .$result->tracks[0]->album->name. "<br>";
           echo "アルバムリリース日：" .$result->tracks[0]->album->release_date. "<br>";
           echo "ジャンル：" .$result1->genres[0]. "<br>";
+
           //foreach( $res2 as $e ){
             //echo "評価：".$e['score']."点<br>";
             //echo "コメント<br>";
@@ -57,23 +58,30 @@
           //}
           ?>
         </p>
+        <iframe src="https://open.spotify.com/embed/track/<?=$_GET['spotify_id']?>"
+            width="70%"
+            height="123"
+            frameborder="0"
+            allowtransparency="true"
+            allow="encrypted-media"></iframe>
       </div>
       <input type="radio" name="tab_name" id="tab2">
       <label class="tab_class" for="tab2">レビューする</label>
       <div class="content_class">
         <p>
-          評価：<input type="text" name="評価" size=10>
+          評価：<input type="number" min="0" max="100" name="eva" size=20>
+        </p>
+
+        <br>
+
+        <p>
+          レビュー:<textarea name="review" rows=3 cols=40></textarea>
         </p>
 
         <br><br>
 
         <p>
-          レビュー:<textarea name="レビュー" rows=3 cols=40></textarea>
-        </p>
-
-        <br><br>
-
-        <p>
+          <input type="hidden" name="spotify_id" value="<?=$_GET['spotify_id']?>">
           <input type="submit" value=" 送信 ">
         </p>
 
