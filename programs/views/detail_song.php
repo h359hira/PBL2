@@ -63,7 +63,8 @@
             height="123"
             frameborder="0"
             allowtransparency="true"
-            allow="encrypted-media"></iframe>
+            allow="encrypted-media">
+        </iframe>
       </div>
       <input type="radio" name="tab_name" id="tab2">
       <label class="tab_class" for="tab2">レビューする</label>
