@@ -8,9 +8,9 @@
     <link rel="stylesheet" href="./detail_css/border.css">
     <link rel="stylesheet" href="./detail_css/tab.css">
     <?php
-    session_start();
 
     require '../methods/db_m.php';
+    require '../methods/login_method.php';
 
     //フォームで送られてきたコミュニティIDをsessionに入れ，更新。
     if (isset($_POST['comm_id'])) {
@@ -26,11 +26,15 @@
     $db_ins = new DataIns();
 
     //仮のsessionUSER　※要削除
-    $_SESSION['user_id'] = 'john1234';
+    //$_SESSION['user_id'] = 'john1234';
 
     //communitiy_insert
-    if(isset($_POST['name'])){
-        $db_ins->set_communitie($_POST['name'], $_SESSION['user_id'], $_POST['desc']);
+    if (isset($_POST['name'])) {
+        if (login_check()) {
+            $db_ins->set_communitie($_POST['name'], $_SESSION['user_id'], $_POST['desc']);
+        } else {
+            header('location:login_form.html');
+        }
     }
 
     //community情報取得
@@ -47,15 +51,15 @@
 <body>
     <nav>
         <ul>
-            <li><a class="current" href="home.php">Home</a></li>
-            <li><a href="search.html">Search</a></li>
-            <li><a href="communitie.php">Community</a></li>
-            <li><a href=”#”>Profile</a></li>
+            <li><a class=”current” href="home.php"> Home </a></li>
+            <li><a href="search.html"> Search </a></li>
+            <li><a href="communitie.php"> Community </a></li>
+            <li><a href="profiel.php"> Profile </a></li>
         </ul>
     </nav>
 
     <div class="border" style="text-align: center">
-        <h3>コミュニティ</h3>
+        <h3>コミュニティ <?=$_SESSION['comm_id']?></h3>
         <hr>
 
         <div class="area">
@@ -92,22 +96,22 @@
             <label class="tab_class" for="tab2">作成</label>
             <div class="content_class">
                 <form action="communitie.php" method="post">
-                <p>
-                    コミュニティ名：<input type="text" name="name" size=30>
-                </p>
+                    <p>
+                        コミュニティ名：<input type="text" name="name" size=30>
+                    </p>
 
-                <br><br>
+                    <br><br>
 
-                <p>
-                    説明:<br>
-                    <textarea name="desc" rows=12 cols=40></textarea>
-                </p>
+                    <p>
+                        説明:<br>
+                        <textarea name="desc" rows=12 cols=40></textarea>
+                    </p>
 
-                <br><br>
+                    <br><br>
 
-                <p>
-                    <input type="submit" value=" 送信 ">
-                </p>
+                    <p>
+                        <input type="submit" value=" 送信 ">
+                    </p>
                 </form>
 
             </div>
