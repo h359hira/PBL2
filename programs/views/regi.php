@@ -10,6 +10,10 @@
         </header>
 
         <?php
+        $db_name = 'mysql:host=localhost;dbname=pbl2';
+        $db_user = 'root';
+        $db_pass = '';
+
         $user_id = $_POST["user_id"]; 
         $password = $_POST["password1"];
         $password1 = $_POST["password2"];   //２回目のパスワード
@@ -19,7 +23,7 @@
         $favorite = $_POST["favorite"];
 
         if($password == $password1){
-            $db = new pdo("mysql:host=localhost;dbname=pbl2", "pbl2", "pbl2");
+            $db = new pdo($db_name, $db_user, $db_pass);
             $ps=$db->query("SELECT * FROM user_table");
             while($r=$ps->fetch()){
                 if($r[0] == $user_id){

@@ -3,6 +3,8 @@ error_reporting(0);
 
 session_start();
 session_destroy();
+header('location:../views/home.php');
+
 /*
 if($_SESSION["user_id"]==NULL){
     print "ログアウト成功" . "<BR>";
