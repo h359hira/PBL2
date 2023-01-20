@@ -8,17 +8,17 @@
   <link rel="stylesheet" href="./detail_css/border.css">
   <link rel="stylesheet" href="./detail_css/tab.css">
   <?php
-  //review
-  //require '../methods/db_m.php';
-
-  //$db = new GetReview();
-
-  //$res1 = $db->get_all_user_review('john1234');
-  //$res2 = $db->get_all_track_review('7iN1s7xHE4ifF5povM6A48');
-  
-  //detail_song
+  session_start();
   require '../vendor/autoload.php';
   require '../methods/api_request.php';
+  require '../methods/db_m.php';
+  require '../methods/sortByKey.php';
+
+  $db = new GetReview();
+
+  $res2 = $db->get_all_track_review($_GET['spotify_id'], $_SESSION['comm_id']);
+  $user_score = $db->get_score(false, $_SESSION['comm_id']);
+  $user_sorted = sortByKey("AVG(score)", SORT_DESC, $user_score);
 
   $result = get_track_info($_GET['spotify_id']);
   $result1 = get_artist_info($result->tracks[0]->album->artists[0]->id);
@@ -29,15 +29,14 @@
 <body>
   <nav>
     <ul>
-      <li><a class=”current” href=”#”>Home</a></li>
-      <li><a href=”http://localhost/pbl2_work/programs/views/search.html”>Search</a></li>
-      <li><a href=”#”>Community</a></li>
-      <li><a href=”#”>Profile</a></li>
-    </ul>
+      <li><a class=”current” href="home.php"> Home </a></li>
+      <li><a href="search.html"> Search </a></li>
+      <li><a href="communitie.php"> Community </a></li>
+      <li><a href="profiel.php"> Profile </a></li>
   </nav>
 
   <div class="border" style="text-align: center">
-    <h3><?= $result->tracks[0]->name?></h3>
+    <h3><?= $result->tracks[0]->name ?></h3>
     <hr>
 
     <div class="area">
@@ -46,25 +45,23 @@
       <div class="content_class">
         <p>
           <?php
-          echo "アーティスト名：" .$result->tracks[0]->artists[0]->name. "<br>";
-          echo "収録アルバム名：" .$result->tracks[0]->album->name. "<br>";
-          echo "アルバムリリース日：" .$result->tracks[0]->album->release_date. "<br>";
-          echo "ジャンル：" .$result1->genres[0]. "<br>";
-
-          //foreach( $res2 as $e ){
-            //echo "評価：".$e['score']."点<br>";
-            //echo "コメント<br>";
-            //echo $e['comment']."<br>";
-          //}
+          echo "アーティスト名：" . $result->tracks[0]->artists[0]->name . "<br>";
+          echo "収録アルバム名：" . $result->tracks[0]->album->name . "<br>";
+          echo "アルバムリリース日：" . $result->tracks[0]->album->release_date . "<br>";
+          echo "ジャンル：" . $result1->genres[0] . "<br>";
           ?>
         </p>
-        <iframe src="https://open.spotify.com/embed/track/<?=$_GET['spotify_id']?>"
-            width="70%"
-            height="123"
-            frameborder="0"
-            allowtransparency="true"
-            allow="encrypted-media">
+        <iframe src="https://open.spotify.com/embed/track/<?= $_GET['spotify_id'] ?>" width="70%" height="123" frameborder="0" allowtransparency="true" allow="encrypted-media">
         </iframe>
+        <?php
+        foreach ($res2 as $review) {
+          foreach ($user_sorted as $user)
+            if ($review['user_id'] == $user['subject_user_id']) {
+              echo "評価：" . $review['score'] . "<br>";
+              echo "コメント：" . $review['comment'] . "<br>";
+            }
+        }
+        ?>
       </div>
       <input type="radio" name="tab_name" id="tab2">
       <label class="tab_class" for="tab2">レビューする</label>
@@ -82,7 +79,7 @@
         <br><br>
 
         <p>
-          <input type="hidden" name="spotify_id" value="<?=$_GET['spotify_id']?>">
+          <input type="hidden" name="spotify_id" value="<?= $_GET['spotify_id'] ?>">
           <input type="submit" value=" 送信 ">
         </p>
 
