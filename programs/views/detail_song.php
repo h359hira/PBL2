@@ -66,6 +66,7 @@
       <input type="radio" name="tab_name" id="tab2">
       <label class="tab_class" for="tab2">レビューする</label>
       <div class="content_class">
+      <form method="POST" action="../methods/song_eva.php">
         <p>
           評価：<input type="number" min="0" max="100" name="eva" size=20>
         </p>
@@ -79,9 +80,10 @@
         <br><br>
 
         <p>
-          <input type="hidden" name="spotify_id" value="<?= $_GET['spotify_id'] ?>">
+          <input type="hidden" name="spotify_id" value="<?=$_GET['spotify_id']?>">
           <input type="submit" value=" 送信 ">
         </p>
+        </form>
 
 
 
