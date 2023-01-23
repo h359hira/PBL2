@@ -54,35 +54,48 @@
         <iframe src="https://open.spotify.com/embed/track/<?= $_GET['spotify_id'] ?>" width="70%" height="123" frameborder="0" allowtransparency="true" allow="encrypted-media">
         </iframe>
         <?php
+        $review2 = array();
         foreach ($res2 as $review) {
-          foreach ($user_sorted as $user)
+          $flag = 0;
+          foreach ($user_sorted as $user) {
             if ($review['user_id'] == $user['subject_user_id']) {
+              echo "ユーザID：" . $review['user_id'] . "<br>";
               echo "評価：" . $review['score'] . "<br>";
-              echo "コメント：" . $review['comment'] . "<br>";
+              echo "コメント：" . $review['comment'] . "<br><br>";
+              $flag = 1;
+              break;
             }
+          }
+          if (!$flag) {
+            array_push($review2, $review);
+          }
+        }
+        foreach ($review2 as $review) {
+          echo "評価：" . $review['score'] . "<br>";
+          echo "コメント：" . $review['comment'] . "<br>";
         }
         ?>
       </div>
       <input type="radio" name="tab_name" id="tab2">
       <label class="tab_class" for="tab2">レビューする</label>
       <div class="content_class">
-      <form method="POST" action="../methods/song_eva.php">
-        <p>
-          評価：<input type="number" min="0" max="100" name="eva" size=20>
-        </p>
+        <form method="POST" action="../methods/song_eva.php">
+          <p>
+            評価：<input type="number" min="0" max="100" name="eva" size=20 required>
+          </p>
 
-        <br>
+          <br>
 
-        <p>
-          レビュー:<textarea name="review" rows=3 cols=40></textarea>
-        </p>
+          <p>
+            レビュー:<textarea name="review" rows=3 cols=40 required></textarea>
+          </p>
 
-        <br><br>
+          <br><br>
 
-        <p>
-          <input type="hidden" name="spotify_id" value="<?=$_GET['spotify_id']?>">
-          <input type="submit" value=" 送信 ">
-        </p>
+          <p>
+            <input type="hidden" name="spotify_id" value="<?= $_GET['spotify_id'] ?>">
+            <input type="submit" value=" 送信 ">
+          </p>
         </form>
 
 
