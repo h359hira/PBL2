@@ -1,6 +1,23 @@
 <?php
 require '../vendor/autoload.php';
 
+function get_artist_info($artist_id){
+    $session = new SpotifyWebAPI\Session(
+        'e3b54d636bfc4563847d04e832bf8f3d',
+        '312b2e31c1b94754b86c6d686e14f991'
+    );
+
+    $api = new SpotifyWebAPI\SpotifyWebAPI();
+    
+    $session->requestCredentialsToken();
+    $accessToken = $session->getAccessToken();
+    $api->setAccessToken($accessToken);
+
+    $res = $api->getArtist($artist_id);
+
+    return $res;
+}
+
 function get_track_info($spo_ids){
 
     $session = new SpotifyWebAPI\Session(
@@ -39,4 +56,6 @@ function search_track($query){
 
     return $res;
 }
+//$res = get_track_info('4wLQr28uORriOx5rNM8by7');
+//echo $res->tracks[0]->album->release_date;
 ?>
