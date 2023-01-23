@@ -45,7 +45,10 @@ class GetReview{
     //scoreの計算メソッド
     //type = true :track type = false :user, 
     public function get_score($type, $communitie_id){
-        if( $type ){
+        if( !is_bool($type) ){
+            return false;
+        }
+        if( $type == true ){
             $field = 'track_evaluation_table';
             $idtype = 'spotify_id';
         }
@@ -225,7 +228,7 @@ class DataIns{
 //$db_ins = new DataIns();
 //$res1 = $db_review->get_all_track_review($spotify_id,$communitie_id);
 //$res2 = $db_review->get_all_user_review($subject_user_id, $communitie_id);
-//$res3 = $db_review->get_score(false, $communitie_id);
+//$res3 = $db_review->get_score('a', $communitie_id);
 //$res4 = $db_user_and_com->get_all_users();
 //$res5 = $db_user_and_com->get_profile($user_id);
 //$res6 = $db_user_and_com->get_all_communities();
