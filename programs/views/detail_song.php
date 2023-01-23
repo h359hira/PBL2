@@ -68,13 +68,13 @@
       <div class="content_class">
       <form method="POST" action="../methods/song_eva.php">
         <p>
-          評価：<input type="number" min="0" max="100" name="eva" size=20>
+          評価：<input type="number" min="0" max="100" name="eva" size=20 required>
         </p>
 
         <br>
 
         <p>
-          レビュー:<textarea name="review" rows=3 cols=40></textarea>
+          レビュー:<textarea name="review" rows=3 cols=40 required></textarea>
         </p>
 
         <br><br>
