@@ -9,6 +9,8 @@
 <link rel="stylesheet" href="./detail_css/tab.css">
 
 <?php
+ session_start();
+ require '../methods/api_request.php';
  require '../methods/db_m.php';
  require '../methods/sortByKey.php';
 ?>
@@ -25,7 +27,7 @@
       <li><a class=”current” href=home.php> Home </a></li>
       <li><a href=search.html> Search </a></li>
       <li><a href=communitie.php> Community </a></li>
-      <li><a href=”#”> Profile </a></li>
+      <li><a href=profiel.php> Profile </a></li>
     </ul>
   </nav>
 
@@ -33,49 +35,46 @@
   ファイル・データ読み込み系コード
   -->
   <?php
-    // 指定したキーに対応する値を基準に、配列をソートする
-    /*
-    function sortByKey($key_name, $sort_order, $array) {
-      foreach ($array as $key => $value) {
-          $standard_key_array[$key] = $value[$key_name];
-      }
-      array_multisort($standard_key_array, $sort_order, $array);
-      return $array;
-    }
-    */
+    $_SESSION['comm_id'] = 1;
 
-    //テキストファイルテストコード
-    $filename = './track_point.txt';
+    //DBインスタンス生成
+    $db_review = new GetReview();
+    //get_score( type, communitie_id ) typeはtrueが曲、falseがユーザー
 
-    $file = file($filename);//1行ずつ配列として格納
+    //曲のIDと平均点取得（ spotify_id, AVE(score) ）
+    $track_score = $db_review->get_score( true, $_SESSION['comm_id'] );
+    //曲の平均点ランキング取得
+    $track_id_rank = sortByKey( 'AVG(score)', SORT_DESC, $track_score );
 
-    //曲のタイトルと得点を分割して配列に格納
-    foreach( $file as $line ){
-      $dat = explode(',', rtrim($line));//,で分割
-      $data[] = array(
-        'title' => $dat[0],
-        'point' => $dat[1]
-      );
-    }
+    //ユーザーのIDと平均点取得（ spotify_id, AVE(score) ）
+    $user_score = $db_review->get_score( false, $_SESSION['comm_id'] );
+    //ユーザーの平均点ランキング取得
+    $user_id_rank = sortByKey('AVG(score)', SORT_DESC, $user_score );
 
-    echo 'ソート前<br>';
-    print_r($data);
+    //曲を評価順に並べた配列を一挙表示
+    var_dump($track_id_rank);
+    echo '<br><br>';
+    //ユーザーを評価順に並べた配列を一挙表示
+    var_dump($user_id_rank);
     echo '<br><br>';
 
-    //得点をキーに点が高い順にソート
-    $sorted_array = sortByKey('point', SORT_DESC, $data);
+    //曲情報取得,関連情報一挙表示
+    $track_info_test = get_track_info($track_id_rank[0]['spotify_id']);
+    echo $track_info_test->tracks[0]->album->name;
+    //echo '<br><br>';
+    //var_dump($track_info_test->tracks[0]);
 
-    echo 'ソート後<br>';
-    //print_r($sorted_array);
-    var_dump($sorted_array);
+    //URLとIDを結合
+    $id_tmp = $track_id_rank[0]['spotify_id'];
+    $spotify_url = "https://open.spotify.com/embed/track/"."$id_tmp";
 
-    //曲の平均点ランキング取得
-    //$track_ave = ;
-    //$track_rank = sortByKey('AVE(score)', SORT_DESC, $track_ave);
-
-    //ユーザーの平均点ランキング取得
-    //$user_ave = ;
-    //$user_rank = sortByKey('AVE(score)', SORT_DESC, $user_ave);
+    //spotifyの枠で表示
+    echo "<iframe src=".$spotify_url."
+    width=\"30%\"
+    height=\"123\"
+    frameborder=\"0\"
+    allowtransparency=\"true\"
+    allow=\"encrypted-media\"></iframe>";
 
   ?>
 
@@ -84,33 +83,51 @@
     <h3>楽曲ランキング</h3>
       <div id="track_ranking">
         <?php
+          //DBランキング表示領域
+
           //ソート結果を順番に表示するコード
-          foreach( $sorted_array as $key => $value ){
-            echo $key+1 . '. ' . $value['title'].'<br>';
-          }
-          /*
-          //ソート結果を順番に表示するコード
-          foreach( $track_rank as $key => $value ){
+          foreach( $track_id_rank as $key => $value ){
            if( $key >= 3 ) break; //3個目まで表示して終了
-           echo $key+1 . '. ' . $value['spotify_id']. ', '. $value['AVE(score)'] . '<br>';
+           //URLとIDを結合
+           $id_tmp = $value['spotify_id'];
+           $spotify_url = "https://open.spotify.com/embed/track/"."$id_tmp";
+
+           //ランキング配列内の曲情報取得
+           $track_info = get_track_info($track_id_rank[$key]['spotify_id']);
+
+           //順位表示
+           echo $key+1 . '. ';
+
+           //曲詳細画面へのリンク表示
+           echo "<a href=\"./detail_song.php?spotify_id=".$id_tmp."\">"
+           .$track_info->tracks[0]->album->name.
+           "</a>";
+
+           //曲のスコア表示
+           echo ', '. $value['AVG(score)'] . '<br>';
+
+           //spotifyの枠で表示
+           echo "<iframe src=".$spotify_url."
+           width=\"40%\"
+           height=\"123\"
+           frameborder=\"0\"
+           allowtransparency=\"true\"
+           allow=\"encrypted-media\"></iframe><br>";
           }
-          */
+
         ?>
       </div>
 
     <h3>ユーザーランキング</h3>
       <div id="user_ranking">
-        1.<br>
-        2.<br>
-        3.<br>
         <?php
-        /*
+
         //ソート結果を順番に表示するコード
-        foreach( $user_rank as $key => $value ){
+        foreach( $user_id_rank as $key => $value ){
          if( $key >= 3 ) break; //3個目まで表示して終了
-         echo $key+1 . '. ' . $value['subject_user_id']. ', '. $value['AVE(score)'] . '<br>';
+         echo $key+1 . '. ' . $value['subject_user_id']. ', '. $value['AVG(score)'] . '<br>';
         }
-        */
+
         ?>
       </div>
 </body>
