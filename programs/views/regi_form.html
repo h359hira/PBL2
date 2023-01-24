@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="ja">
     <head>
+        <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
+        <link rel="stylesheet" href="./login_css/login.css">
         <meta charset="utf-8">
         <title>登録画面</title>
     </head>
@@ -10,29 +12,29 @@
         </header>
         
         <form action="regi.php" method="POST">
-            <table>
+            <table class="table_regi">
                 <tr>
-                    <td>ユーザーID：</td><td><input type="text" name ="user_id" maxlength = 25 pattern="^[a-zA-Z0-9]+$" required></td>
+                    <td class="label">ユーザーID：</td><td><input class="text" type="text" name ="user_id" maxlength = 25 pattern="^[a-zA-Z0-9]+$" required></td>
                 </tr>
                 <tr>
-                    <td>ユーザーネーム：</td><td><input type="text" name ="user_name" maxlength = 30 required></td>
+                    <td class="label">ユーザーネーム：</td><td><input class="text" type="text" name ="user_name" maxlength = 30 required></td>
                 </tr>
                 <tr>
-                    <td>パスワード：</td><td><input type="text" name ="password1" maxlength = 20 required></td>
+                    <td class="label">パスワード：</td><td><input class="text" type="text" name ="password1" maxlength = 20 required></td>
                 </tr>
                 <tr>
-                    <td>パスワード（２回目）：</td><td><input type="text" name ="password2" maxlength = 20 required></td>
+                    <td class="label">パスワード（２回目）：</td><td><input class="text" type="text" name ="password2" maxlength = 20 required></td>
                 </tr>
                 <tr>
-                    <td>年齢：</td><td><input type="text" name ="age" maxlength = 4 required></td>
+                    <td class="label">年齢：</td><td><input class="text" type="text" name ="age" maxlength = 4 required></td>
                 </tr>
                 <tr>
-                    <td>性別：</td><td><input type="radio" name ="sex" value = "man" required>男<input type="radio" name="sex" value="woman">女</td>
+                    <td class="label">性別：</td><td><div class="radio_cont"><label><input class="radio" type="radio" name ="sex" value = "man" required>男</label><label><input class="radio" type="radio" name="sex" value="woman">女</td></label></div>
                 </tr>
                 <tr>
-                    <td>お気に入りのジャンル：</td><td><input type="text" name ="favorite" required></td>
+                    <td class="label">お気に入りのジャンル：</td><td><input class="text" type="text" name ="favorite" required></td>
                 </tr>
-                <tr><td colspan="2"><input type="submit" value="登録"></td></tr>
+                <tr><td colspan="2"><input class="button"type="submit" value="登録"></td></tr>
             </table>
         </form>
     </body>

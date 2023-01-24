@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="ja">
     <head>
+        <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
+        <link rel="stylesheet" href="./login_css/login.css">
         <meta charset="utf-8">
         <title>登録画面</title>
     </head>
     <body>
         <header>
-            <h1">新規登録</h1>
+            <h1>新規登録</h1>
         </header>
 
         <?php
@@ -27,8 +29,8 @@
             $ps=$db->query("SELECT * FROM user_table");
             while($r=$ps->fetch()){
                 if($r[0] == $user_id){
-                    echo "<p>このユーザーIDは既に使用されています。</p>";
-                    echo '<a href ="regi_form.html"><button>戻る</button></a>';
+                    echo '<p class="error">このユーザーIDは既に使用されています。</p>';
+                    echo '<a href ="regi_form.html"><button class="button">戻る</button></a>';
                     exit;
                 }
             }
@@ -40,12 +42,12 @@
             $sql->bindParam( ':sex', $sex, PDO::PARAM_STR);
             $sql->bindParam( ':favorite', $favorite, PDO::PARAM_STR);
             $sql->execute();
-            echo "<p>登録成功しました。</p>";
-            echo '<a href ="login_form.html"><button>ログインページに戻る</button></a>';
+            echo '<p class="succes">登録成功しました。</p>';
+            echo '<a href ="login_form.html"><button class="button">戻る</button></a>';
             $db = null;
         }else{
-            echo "<p>入力したパスワードが異なります。</p>";
-            echo '<a href ="regi_form.html"><button>戻る</button></a>';
+            echo '<p class="error">入力したパスワードが異なります。</p>';
+            echo '<a href ="regi_form.html"><button class="button">戻る</button></a>';
             exit;
         }
         ?>
