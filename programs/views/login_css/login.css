@@ -1,15 +1,11 @@
 @charset "utf-8";
 
 body{
-    font-family: 'Kosugi Maru', sans-serif;
-    background-color: rgb(41, 40, 40);
-    color: white;
-    text-align: center;
+    text-align: center; 
 }
 
 .header{
     display:flex;
-    background-color: rgb(42, 255, 42);
     height:80px;
     padding: 5px;
     font-weight: bold;
@@ -17,59 +13,28 @@ body{
     align-items: center;
 }
 
-h1.title{
-    background-color: rgb(42, 255, 42);
-    color: black;
-    font-size: 90px;
-    padding: 90px;
-    width: 700px;
-    margin: 70px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 100px;
-    border-radius: 30px;
-}
-
-.header_h1{
+h1{
     font-size: 45px;
     text-align: left;
     margin-left: 80px;
 }
 
-.title_button{
-    background-color : #d9d7d7;
-    font-weight: bold;
-    font-size: 30px;
-    height: 60px;
-    width: 300px;
-    margin-right: 10px;
-    margin-bottom: 20px;
-}
-
-.title_button:hover{
-    transform: scale(1.1);
-    transition-duration: 0.5s;
-    opacity: 0.6;
-}
-
-input{
-    color:white;
-}
-
-.label{
-    text-align: right;
-}
-
 input.text{
-    background-color: white;
+    border-radius: 10px;
     color: black;
     padding: 10px;
-    width:450px
+    width:450px;
+    border:1px solid black;
+}
+
+input.radio{
+    transform:scale(1.2);
 }
 
 .button{
     background-color : #d9d7d7;
     color: black;
+    font-size: 30px;
     font-weight: bold;
     height: 50px;
     width: 200px;
@@ -88,20 +53,33 @@ input.text{
     text-align: center;
 }
 
-table{
-    margin-top: 50px;
-    width: 900px;
+.table_login{
+    margin-top: 10px;
+    width: 700px;
     margin-left: auto;
     margin-right: auto;
     text-align: center;
-    border-spacing: 0px 40px;    
-    font-size: 30px;
+    border-spacing: 0px 10px;    
+    font-size: 25px;
+}
+
+.table_regi{
+    margin-top: 10px;
+    width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    border-spacing: 0px 10px;    
+    font-size: 25px;
+}
+
+td.label{
+    text-align: right;
 }
 
 p.regi_guide{
     font-size: 20px;
     margin-top: 20px;
-    color: red;
 }
 
 .regi_page_button{
@@ -120,4 +98,20 @@ p.regi_guide{
     transform: scale(1.1);
     transition-duration: 0.5s;
     opacity: 0.6;
+}
+
+.radio_cont{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+p.error{
+    color: red;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+p.succes{
+    font-size: 30px;
+    font-weight: bold;
 }

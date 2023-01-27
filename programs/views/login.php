@@ -1,31 +1,46 @@
-<?php
-$db_name = 'mysql:host=localhost;dbname=pbl2';
-$db_user = 'root';
-$db_pass = '';
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
+        <link rel="stylesheet" href="./login_css/login.css">
+        <meta charset="utf-8">
+        <title>ログイン画面</title>
+    </head>
+    <body>
+        <header>
+            <h1>新規登録</h1>
+        </header>
 
-$user_id = $_POST['user_id'];
-$password = $_POST['password'];
+    <?php
+    $db_name = 'mysql:host=localhost;dbname=pbl2';
+    $db_user = 'root';
+    $db_pass = '';
 
-$db = new pdo($db_name, $db_user, $db_pass);
-$ps=$db->query('SELECT * FROM user_table');
+    $user_id = $_POST['user_id'];
+    $password = $_POST['password'];
 
-//ユーザーID探し
-while($r=$ps->fetch()){
-    if($r[0] == $user_id){
-        if($r[2] == $password){
-            session_start();
-            $_SESSION['user_id'] = $user_id;
+    $db = new pdo($db_name, $db_user, $db_pass);
+    $ps=$db->query('SELECT * FROM user_table');
 
-            header("Location:home.php");
-            exit;
-        }
-        else {
-            echo '<p>ユーザーIDかパスワードが間違っています。</p>';
-            echo '<a href ="login_form.html"><button>戻る</button></a>';
-            exit;
+    //ユーザーID探し
+    while($r=$ps->fetch()){
+        if($r[0] == $user_id){
+            if($r[2] == $password){
+                session_start();
+                $_SESSION['user_id'] = $user_id;
+
+                header("Location:home.php");
+                exit;
+            }
+            else {
+                echo '<p class="error">ユーザーIDかパスワードが間違っています。</p>';
+                echo '<a href ="login_form.html"><button class="button">戻る</button></a>';
+                exit;
+            }
         }
     }
-}
-echo '<p>ユーザーIDかパスワードが間違っています。</p>';
-echo '<a href ="login_form.html"><button>戻る</button></a>';
+    echo '<p class="error">ユーザーIDかパスワードが間違っています。</p>';
+    echo '<a href ="login_form.html"><button class="button">戻る</button></a>';
 ?>
+</body>
+</html>
