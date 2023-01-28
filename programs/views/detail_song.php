@@ -18,15 +18,15 @@
 
   $db = new GetReview();
 
-  $res2 = $db->get_all_track_review($_GET['spotify_id'], $_SESSION['comm_id']);
+  $reviews = $db->get_all_track_review($_GET['spotify_id'], $_SESSION['comm_id']);
+
   $user_score = $db->get_score(false, $_SESSION['comm_id']);
-  if (empty($track_score)) {
+  if (empty($user_score)) {
     $user_sorted = array();
-  }
-  else{
+  } else {
     $user_sorted = sortByKey("AVG(score)", SORT_DESC, $user_score);
   }
-  
+
   $result = get_track_info($_GET['spotify_id']);
   $result1 = get_artist_info($result->tracks[0]->album->artists[0]->id);
 
@@ -131,34 +131,45 @@
 
     <div style="text-align: center;">
       <?php
-      $review2 = array();
-      foreach ($res2 as $review) {
-        $flag = 0;
-        foreach ($user_sorted as $user) {
-          if ($review['user_id'] == $user['subject_user_id']) {
-            $user_url = "profile.php?user_id=" . $review['user_id'];
-            echo "ユーザID：";
-            echo "<a href=\"$user_url\">";
-            echo $review['user_id'] . "</a>" . "<br>";
-            echo "評価：" . $review['score'] . "<br>";
-            echo "コメント：" . $review['comment'] . "<br><br>";
-            $flag = 1;
-            break;
+      //レビュー表示
+      $done_review = array();
+      if (!empty($reviews)) {
+        foreach ($user_sorted as $index => $user) {
+          foreach ($reviews as $index2 => $review) {
+            if ($review['user_id'] == $user['subject_user_id']) {
+              $user_flag = true;
+              $user_url = "profile.php?user_id=" . $review['user_id'];
+              echo $index . "：";
+              echo "ユーザID：";
+              echo "<a href=\"$user_url\">";
+              echo $review['user_id'] . "</a>" . "<br>";
+              echo "評価：" . $review['score'] . "<br>";
+              echo "コメント：" . $review['comment'] . "<br><br>";
+              array_push($done_review, $review['eva_id']);
+            }
           }
         }
-        if (!$flag) {
-          array_push($review2, $review);
+
+        foreach ($reviews as $review) {
+          foreach ($done_review as $done) {
+            if ($review['eva_id'] == $done) {
+              continue 2;
+            }
+          }
+
+          $user_url = "profile.php?user_id=" . $review['user_id'];
+          echo "未評価のユーザID：";
+          echo "<a href=\"$user_url\">";
+          echo $review['user_id'] . "</a>" . "<br>";
+          echo "評価：" . $review['score'] . "<br>";
+          echo "コメント：" . $review['comment'] . "<br>";
         }
+      } //評価がないとき
+      else {
+        echo "There's no review on this song...<br>";
+        echo "You can be a first reviewer of this song!!!";
       }
 
-      foreach ($review2 as $review) {
-        $user_url = "profile.php?user_id=" . $review['user_id'];
-        echo "ユーザID：";
-        echo "<a href=\"$user_url\">";
-        echo $review['user_id'] . "</a>" . "<br>";
-        echo "評価：" . $review['score'] . "<br>";
-        echo "コメント：" . $review['comment'] . "<br>";
-      }
       ?>
     </div>
 
