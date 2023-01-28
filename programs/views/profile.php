@@ -5,6 +5,9 @@
     <meta charset="UTF-8" />
     <title>プロフィール画面</title>
     <link rel="stylesheet" href="profile_style.css">
+    <?php
+    session_start();
+    ?>
     <style>
         nav {
             text-align: center;
@@ -248,11 +251,22 @@
         }
     </style>
     <?php
-    //session_start();
     require '../methods/db_m.php';
+    require '../methods/sortByKey.php';
 
     $db = new GetUeserAndComData();
+    $db_review = new GetReview();
+
     $user_prof = $db->get_profile($_GET['user_id']);
+
+    $reviews = $db_review->get_all_user_review($_GET['user_id'], $_SESSION['comm_id']);
+    $user_score = $db_review->get_score(false, $_SESSION['comm_id']);
+    if (empty($user_score)) {
+        $user_sorted = array();
+    } else {
+        $user_sorted = sortByKey("AVG(score)", SORT_DESC, $user_score);
+    }
+
 
     ?>
 </head>
@@ -283,7 +297,7 @@
                                             <div class="flex">｜</div>
                                             <div class="flex">(5.0)</div>
                                         </div>
-                                        <p class="text-secondary mb-1">HIP HOPばかり聴いています</p>
+                                        <p class="text-secondary mb-1"></p>
                                         <div class="accordion">
                                             <form action="../methods/user_eva.php" method="post">
                                                 <input type="checkbox" id="check1" class="accordion-hidden">
@@ -343,7 +357,49 @@
                         <div class="col-sm-6 mb-3">
                             <div class="card h-100">
                                 <div class="card-body">
-                                    <h6 class="d-flex align-items-center mb-3">Review from User</h6>
+                                    <h6 class="d-flex align-items-center mb-3">
+                                        <?php
+                                        //レビュー表示
+                                        $done_review = array();
+                                        if (!empty($reviews)) {
+                                            foreach ($user_sorted as $index => $user) {
+                                                foreach ($reviews as $index2 => $review) {
+                                                    if ($review['user_id'] == $user['subject_user_id']) {
+                                                        $user_flag = true;
+                                                        $user_url = "profile.php?user_id=" . $review['user_id'];
+                                                        echo $index . "：";
+                                                        echo "ユーザID：";
+                                                        echo "<a href=\"$user_url\">";
+                                                        echo $review['user_id'] . "</a>" . "<br>";
+                                                        echo "評価：" . $review['score'] . "<br>";
+                                                        echo "コメント：" . $review['comment'] . "<br><br>";
+                                                        array_push($done_review, $review['eva_id']);
+                                                    }
+                                                }
+                                            }
+
+                                            foreach ($reviews as $review) {
+                                                foreach ($done_review as $done) {
+                                                    if ($review['eva_id'] == $done) {
+                                                        continue 2;
+                                                    }
+                                                }
+
+                                                $user_url = "profile.php?user_id=" . $review['user_id'];
+                                                echo "未評価のユーザID：";
+                                                echo "<a href=\"$user_url\">";
+                                                echo $review['user_id'] . "</a>" . "<br>";
+                                                echo "評価：" . $review['score'] . "<br>";
+                                                echo "コメント：" . $review['comment'] . "<br>";
+                                            }
+                                        } //評価がないとき
+                                        else {
+                                            echo "There's no review on this user...<br>";
+                                            echo "You can be a first reviewer of this user!!!";
+                                        }
+
+                                        ?>
+                                    </h6>
                                 </div>
                             </div>
                         </div>
