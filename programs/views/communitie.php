@@ -54,7 +54,7 @@
             <li><a class=”current” href="home.php"> Home </a></li>
             <li><a href="search.html"> Search </a></li>
             <li><a href="communitie.php"> Community </a></li>
-            <li><a href="profiel.php"> Profile </a></li>
+            <li><a href="mypro_check.php"> Profile </a></li>
         </ul>
     </nav>
 

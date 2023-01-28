@@ -7,6 +7,8 @@
   <link rel="stylesheet" href="./detail_css/main_tag.css">
   <link rel="stylesheet" href="./detail_css/border.css">
   <link rel="stylesheet" href="./detail_css/tab.css">
+  <link rel="stylesheet" href="./detail_css/haikei.css">
+  <link href="https://fonts.googleapis.com/earlyaccess/nicomoji.css" rel="stylesheet">
   <?php
   session_start();
   require '../vendor/autoload.php';
@@ -24,21 +26,49 @@
   $result1 = get_artist_info($result->tracks[0]->album->artists[0]->id);
 
   ?>
+  <style>
+    .border1{
+      width: 500px; 
+       height: 300px;
+     margin:  0 auto; 
+    }
+
+    .logo{
+      top: 50px;
+      width: 10px;
+      height:10px;
+      position: relative;
+    }
+
+    img{
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    h3 {
+      font-family: "Nico Moji";
+    }
+  </style>
 </head>
 
-<body>
+<body class="haikei">
+  <div class="logo">
+  <a href ="home.php"><image src="KYOKULOG_logo.png"></image></a>
+  </div>
+
   <nav>
     <ul>
       <li><a class=”current” href="home.php"> Home </a></li>
       <li><a href="search.html"> Search </a></li>
       <li><a href="communitie.php"> Community </a></li>
-      <li><a href="profiel.php"> Profile </a></li>
+      <li><a href="mypro_check.php"> Profile </a></li>
+    </ul>
   </nav>
 
-  <div class="border" style="text-align: center">
-    <h3><?= $result->tracks[0]->name ?></h3>
-    <hr>
+  <h2 style="text-align: center"><?= $result->tracks[0]->name ?></h3>
+  <hr color="lime">
 
+  <div class="border1" style="text-align: center">
     <div class="area">
       <input type="radio" name="tab_name" id="tab1" checked>
       <label class="tab_class" for="tab1">曲情報</label>
@@ -48,33 +78,18 @@
           echo "アーティスト名：" . $result->tracks[0]->artists[0]->name . "<br>";
           echo "収録アルバム名：" . $result->tracks[0]->album->name . "<br>";
           echo "アルバムリリース日：" . $result->tracks[0]->album->release_date . "<br>";
-          echo "ジャンル：" . $result1->genres[0] . "<br>";
+          echo "ジャンル：";
+          if (isset($result1->genres[0])) {
+            echo $result1->genres[0];
+          }
+          else{
+            echo "情報がありません";
+          }
+          "<br>";
           ?>
         </p>
         <iframe src="https://open.spotify.com/embed/track/<?= $_GET['spotify_id'] ?>" width="70%" height="123" frameborder="0" allowtransparency="true" allow="encrypted-media">
         </iframe>
-        <?php
-        $review2 = array();
-        foreach ($res2 as $review) {
-          $flag = 0;
-          foreach ($user_sorted as $user) {
-            if ($review['user_id'] == $user['subject_user_id']) {
-              echo "ユーザID：" . $review['user_id'] . "<br>";
-              echo "評価：" . $review['score'] . "<br>";
-              echo "コメント：" . $review['comment'] . "<br><br>";
-              $flag = 1;
-              break;
-            }
-          }
-          if (!$flag) {
-            array_push($review2, $review);
-          }
-        }
-        foreach ($review2 as $review) {
-          echo "評価：" . $review['score'] . "<br>";
-          echo "コメント：" . $review['comment'] . "<br>";
-        }
-        ?>
       </div>
       <input type="radio" name="tab_name" id="tab2">
       <label class="tab_class" for="tab2">レビューする</label>
@@ -103,8 +118,41 @@
       </div>
     </div>
 
+  </div>
+  <hr color="lime">
+  <h3 style="text-align: center">レビュー</h3>
 
-
+  <div style="text-align: center;">
+   <?php
+    $review2 = array();
+      foreach ($res2 as $review) {
+        $flag = 0;
+        foreach ($user_sorted as $user) {
+          if ($review['user_id'] == $user['subject_user_id']) {
+            $user_url = "profile.php?user_id=".$review['user_id'];
+            echo "ユーザID：";
+            echo "<a href=\"$user_url\">";
+            echo $review['user_id']."</a>". "<br>";
+            echo "評価：" . $review['score'] . "<br>";
+            echo "コメント：" . $review['comment'] . "<br><br>";
+            $flag = 1;
+            break;
+          }
+        }
+        if (!$flag) {
+          array_push($review2, $review);
+        }
+      }
+        
+      foreach ($review2 as $review) {
+        $user_url = "profile.php?user_id=".$review['user_id'];
+        echo "ユーザID：";
+        echo "<a href=\"$user_url\">";
+        echo $review['user_id']."</a>". "<br>";
+        echo "評価：" . $review['score'] . "<br>";
+        echo "コメント：" . $review['comment'] . "<br>";
+      }
+    ?>
   </div>
 
 
