@@ -59,7 +59,7 @@
     </nav>
 
     <div class="border" style="text-align: center">
-        <h3>コミュニティ <?=$_SESSION['comm_id']?></h3>
+        <h3>コミュニティ</h3>
         <hr>
 
         <div class="area">

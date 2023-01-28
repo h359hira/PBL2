@@ -233,17 +233,17 @@
 
         }
 
-        
-        .User-info{
+
+        .User-info {
             display: flex;
         }
 
-        .star{
+        .star {
             color: #66cdaa;
         }
 
-        .flex{
-            margin:auto 0;
+        .flex {
+            margin: auto 0;
             font-size: 20px;
         }
     </style>
@@ -261,9 +261,9 @@
     <nav>
         <ul>
             <li><a class=”current” href="home.php">Home</a></li>
-            <li><a href=”search.html”>Search</a></li>
-            <li><a href=”communitie.php”>Community</a></li>
-            <li><a href=”mypro_check.php”>Profile</a></li>
+            <li><a href="search.html">Search</a></li>
+            <li><a href="communitie.php">Community</a></li>
+            <li><a href="mypro_check.php">Profile</a></li>
         </ul>
     </nav>
     <section>
@@ -274,11 +274,10 @@
                         <div class="card">
                             <div class="card-body">
                                 <div class="d-flex flex-column align-items-center text-center">
-                                    <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin"
-                                        class="rounded-circle" width="150" id="profile_image">
+                                    <img src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Admin" class="rounded-circle" width="150" id="profile_image">
                                     <div class="mt-3">
                                         <div class="User-info">
-                                            <h4><?=$user_prof[0]['user_name']?></h4>
+                                            <h4><?= $user_prof[0]['user_name'] ?></h4>
                                             <h4>　　</h4>
                                             <div class="star flex">★★★★★</div>
                                             <div class="flex">｜</div>
@@ -286,27 +285,30 @@
                                         </div>
                                         <p class="text-secondary mb-1">HIP HOPばかり聴いています</p>
                                         <div class="accordion">
-                                            <input type="checkbox" id="check1" class="accordion-hidden">
-                                            <label for="check1" class="accordion-open">Evaluate</label>
-                                            <label for="check1" class="accordion-close">
-                                                <hr>
-                                                <div class="rate-form">
-                                                    <input id="star5" type="radio" name="rate" value="5">
-                                                    <label for="star5">★</label>
-                                                    <input id="star4" type="radio" name="rate" value="4">
-                                                    <label for="star4">★</label>
-                                                    <input id="star3" type="radio" name="rate" value="3">
-                                                    <label for="star3">★</label>
-                                                    <input id="star2" type="radio" name="rate" value="2">
-                                                    <label for="star2">★</label>
-                                                    <input id="star1" type="radio" name="rate" value="1">
-                                                    <label for="star1">★</label>
-                                                </div>
-                                                <hr>
-                                                <textarea class="tarea" placeholder="レビューを書き込む（800文字以下）"></textarea>
-                                                <hr>
-                                                <button class="btn btn-info right">Send</button>
-                                            </label>
+                                            <form action="../methods/user_eva.php" method="post">
+                                                <input type="checkbox" id="check1" class="accordion-hidden">
+                                                <label for="check1" class="accordion-open">Evaluate</label>
+                                                <label for="check1" class="accordion-close">
+                                                    <hr>
+                                                    <div class="rate-form">
+                                                        <input id="star5" type="radio" name="rate" value="5">
+                                                        <label for="star5">★</label>
+                                                        <input id="star4" type="radio" name="rate" value="4">
+                                                        <label for="star4">★</label>
+                                                        <input id="star3" type="radio" name="rate" value="3">
+                                                        <label for="star3">★</label>
+                                                        <input id="star2" type="radio" name="rate" value="2">
+                                                        <label for="star2">★</label>
+                                                        <input id="star1" type="radio" name="rate" value="1">
+                                                        <label for="star1">★</label>
+                                                    </div>
+                                                    <hr>
+                                                    <textarea class="tarea" name="comment" placeholder="レビューを書き込む（800文字以下）"></textarea>
+                                                    <hr>
+                                                    <button class="btn btn-info right">Send</button>
+                                                    <input type="hidden" name="sub_user" value=<?= $_GET['user_id'] ?>>
+                                                </label>
+                                            </form>
                                         </div>
 
 
@@ -323,7 +325,7 @@
                                         <h6 class="mb-0">Favorite Genre♪</h6>
                                     </div>
                                     <div class="col-sm-9 text-secondary">
-                                       <?=$user_prof[0]['favoite']?>
+                                        <?= $user_prof[0]['favoite'] ?>
                                     </div>
                                 </div>
                                 <hr>
@@ -353,6 +355,7 @@
         </div>
 
     </section>
+    <a href="../methods/logout.php">ログアウト</a>
 </body>
 
 </html>
