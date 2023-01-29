@@ -3,11 +3,22 @@
 
 <head>
   <meta charset="UTF-8">
+  <style>
+    .marker01 {
+      font-weight: bold;
+      color: #DB7093;
+      font-size: 30px;
+      text-decoration-line: underline;
+      text-underline-offset: 2px;
+      text-decoration-thickness: 7px;
+    }
+  </style>
   <title>曲詳細画面</title>
   <link rel="stylesheet" href="./detail_css/main_tag.css">
   <link rel="stylesheet" href="./detail_css/border.css">
   <link rel="stylesheet" href="./detail_css/tab.css">
   <link rel="stylesheet" href="./detail_css/haikei.css">
+  <link rel="stylesheet" href="./star_css/star.css">
   <link href="https://fonts.googleapis.com/earlyaccess/nicomoji.css" rel="stylesheet">
   <?php
   session_start();
@@ -17,6 +28,8 @@
   require '../methods/sortByKey.php';
 
   $db = new GetReview();
+
+  $track_score = $db->get_score(true, $_SESSION['comm_id']);
 
   $reviews = $db->get_all_track_review($_GET['spotify_id'], $_SESSION['comm_id']);
 
@@ -74,7 +87,24 @@
   </nav>
 
   <h2 style="text-align: center"><?= $result->tracks[0]->name ?></h3>
-    <hr color="lime">
+    <p style="text-align: center" class="marker01">
+      <?php
+      foreach ($track_score as $value) {
+        if ($value['spotify_id'] == $_GET['spotify_id']) {
+          echo round($value['AVG(score)'], 1) . "点";
+          $this_track_score = round($value['AVG(score)'] / 20, 1);
+        }
+      }
+      if (empty($this_track_score)) {
+        $this_track_score = "non review";
+      }
+      ?>
+    <div style="text-align: center">
+      <span class="star5_rating" data-rate="<?= $this_track_score ?>"></span>
+      <hr color="lime">
+    </div>
+    </p>
+
 
     <div class="border1" style="text-align: center">
       <div class="area">
