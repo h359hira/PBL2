@@ -7,6 +7,7 @@
 <link rel="stylesheet" href="./detail_css/main_tag.css">
 <link rel="stylesheet" href="./detail_css/border.css">
 <link rel="stylesheet" href="./detail_css/tab.css">
+<link rel="stylesheet" href="./detail_css/haikei.css">
 
 <?php
  session_start();
@@ -20,7 +21,7 @@
 
 </head>
 
-<body>
+<body class="haikei">
 
   <nav>
     <ul>
@@ -82,7 +83,7 @@
 
   ?>
 
-    <div class="border" style="text-align: center">
+    <div class="border" style="text-align: center; background-color:white;">
     <h2>ランキング</h2>
 
     <hr>
@@ -116,7 +117,7 @@
                 "</a>";
 
                 //曲のスコア表示
-                echo ', '. $value['AVG(score)'] . '<br>';
+                echo '  , '. $value['AVG(score)'] . ' 点<br>';
 
                 //spotifyの枠で表示
                 echo "<iframe src=".$spotify_url."
@@ -144,9 +145,16 @@
             //ソート結果を順番に表示するコード
             foreach( $user_id_rank as $key => $value ){
               if( $key >= 3 ) break; //3個目まで表示して終了
-              echo $key+1 . '. ' . $value['subject_user_id']. ', '. $value['AVG(score)'] . '<br>';
+              //ランキング表示
+              echo $key+1 . '.  ';
+              echo "<a href=\"./profile.php?user_id=".$value['subject_user_id']."\">"
+              . $value['subject_user_id'].
+              "</a>";
+              echo '  , '. $value['AVG(score)'] . ' 点<br>';
             }
           }
+
+          echo "<br><br>";
 
           ?>
         </div>
