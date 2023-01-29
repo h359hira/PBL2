@@ -2,14 +2,13 @@
 <html lang="ja">
     <head>
         <link rel="stylesheet" href="https://unpkg.com/ress/dist/ress.min.css">
+        <link href="https://fonts.googleapis.com/css?family=M+PLUS+1p" rel="stylesheet">
         <link rel="stylesheet" href="./login_css/login.css">
         <meta charset="utf-8">
         <title>ログイン画面</title>
     </head>
     <body>
-        <header>
-            <h1>新規登録</h1>
-        </header>
+    <h1>ログイン</h1>
 
     <?php
     $db_name = 'mysql:host=localhost;dbname=pbl2';
