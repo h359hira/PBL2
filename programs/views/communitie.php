@@ -5,8 +5,8 @@
     <title>コミュニティ画面</title>
 
     <link rel="stylesheet" href="./detail_css/main_tag.css">
-    <link rel="stylesheet" href="./detail_css/border.css">
     <link rel="stylesheet" href="./detail_css/tab.css">
+    <link rel="stylesheet" href="./detail_css/haikei.css">
     <?php
 
     require '../methods/db_m.php';
@@ -43,12 +43,12 @@
 
 
     //ボタン変数
-    $now_button = "     <input type =\"submit\"  value =\"NOW ON IT\"><br>";
-    $ava_button = "     <input type =\"submit\" value =\"AVAILABLE\"><br>";
+    $now_button = "     <input type =\"submit\"  value =\"NOW ON IT\" style=\"color:red\"><br>";
+    $ava_button = "     <input type =\"submit\" value =\"AVAILABLE\" style=\"color:blue\"><br>";
     ?>
 </head>
 
-<body>
+<body class="haikei">
     <nav>
         <ul>
             <li><a class=”current” href="home.php"> Home </a></li>
@@ -75,17 +75,17 @@
                         echo "<input type = \"hidden\" name=\"comm_id\" value=\"$com_id\">";
 
                         //コミュニティ名出力(id => name, description)
-                        echo "#" . $com['communitie_name'];
+                        echo "<p style=\"font-weight:bold\">#" . $com['communitie_name'];
 
                         //sessionの値と 一致＝＞now button 不一致＝＞available button
                         if ($_SESSION['comm_id'] == $com_id) {
-                            echo $now_button;
+                            echo $now_button."</p>";
                         } else {
-                            echo $ava_button;
+                            echo $ava_button."</p>";
                         }
 
                         //コミュニティ説明出力
-                        echo "DESCRIPPTION:<br>" . $com['communitie_description'] . "<br><br>";
+                        echo "[DESCRIPPTION]<br>" . $com['communitie_description'] . "<br><br>";
                         echo "</form>";
                     }
                     ?>

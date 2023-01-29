@@ -5,6 +5,7 @@
     <meta charset="UTF-8" />
     <title>プロフィール画面</title>
     <link rel="stylesheet" href="profile_style.css">
+    <link rel="stylesheet" href="./star_css/star.css">
     <?php
     session_start();
     ?>
@@ -267,7 +268,14 @@
         $user_sorted = sortByKey("AVG(score)", SORT_DESC, $user_score);
     }
 
-
+    foreach ($user_score as $each_user) {
+        if ($each_user['subject_user_id'] == $_GET['user_id']) {
+            $this_user_score = $each_user['AVG(score)'] / 20;
+        }
+    }
+    if (empty($this_user_score)) {
+        $this_user_score = "non review";
+    }
     ?>
 </head>
 
@@ -293,9 +301,11 @@
                                         <div class="User-info">
                                             <h4><?= $user_prof[0]['user_name'] ?></h4>
                                             <h4>　　</h4>
-                                            <div class="star flex">★★★★★</div>
+                                            <p class="result-rating-rate">
+                                                <span class="star5_rating" data-rate="<?=$this_user_score?>"></span>
+                                            </p>
                                             <div class="flex">｜</div>
-                                            <div class="flex">(5.0)</div>
+                                            <div class="flex">(<?= $this_user_score ?>)</div>
                                         </div>
                                         <p class="text-secondary mb-1"></p>
                                         <div class="accordion">
