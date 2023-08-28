@@ -3,8 +3,8 @@ require '../vendor/autoload.php';
 
 function get_artist_info($artist_id){
     $session = new SpotifyWebAPI\Session(
-        'e3b54d636bfc4563847d04e832bf8f3d',
-        '312b2e31c1b94754b86c6d686e14f991'
+        'KEY',
+        'PW'
     );
 
     $api = new SpotifyWebAPI\SpotifyWebAPI();
@@ -21,8 +21,8 @@ function get_artist_info($artist_id){
 function get_track_info($spo_ids){
 
     $session = new SpotifyWebAPI\Session(
-        'e3b54d636bfc4563847d04e832bf8f3d',
-        '312b2e31c1b94754b86c6d686e14f991'
+        'KEY',
+        'PW'
     );
     
     $api = new SpotifyWebAPI\SpotifyWebAPI();
@@ -38,8 +38,8 @@ function get_track_info($spo_ids){
 
 function search_track($query){
     $session = new SpotifyWebAPI\Session(
-        'e3b54d636bfc4563847d04e832bf8f3d',
-        '312b2e31c1b94754b86c6d686e14f991'
+        'KEY',
+        'PW'
     );
     
     $api = new SpotifyWebAPI\SpotifyWebAPI();
